@@ -1,6 +1,7 @@
 [workspace]
 members=[
     "img-ing",
-    "structure-de-quadrilate-rs"
+    "structure-de-quadrilate-rs",
+    "unive-rs"
 ]
 resolver="2"

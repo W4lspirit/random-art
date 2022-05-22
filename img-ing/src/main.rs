@@ -1,3 +1,4 @@
+use std::f32::consts::{FRAC_PI_2, FRAC_PI_3, FRAC_PI_4, FRAC_PI_6, FRAC_PI_8};
 use std::time::SystemTime;
 
 use nannou::prelude::*;
@@ -79,12 +80,11 @@ fn schotter(model: &Model, gdraw: Draw) {
     let mut rng = StdRng::seed_from_u64(model.random_seed);
     for y in 0..ROWS {
         for x in 0..COLS {
-
             let cdraw = gdraw.x_y(x as f32, y as f32);
             let factor = y as f32 / ROWS as f32;
             let x_offset = factor * rng.gen_range(-0.3..0.3);
             let y_offset = factor * rng.gen_range(-0.3..0.3);
-            let rotation = factor * rng.gen_range(-PI / 5.0..PI / 5.0);
+            let rotation = FRAC_PI_4 * rng.gen_range(-PI / 5.0..PI / 5.0);
             let yaw = GOLD * factor * rng.gen_range(-PI / 2.0..PI / 2.0);
             cdraw
                 .quad()
@@ -94,12 +94,13 @@ fn schotter(model: &Model, gdraw: Draw) {
                 .w_h(1.0, 1.0)
                 .x_y(x_offset, y_offset)
                 .rotate(rotation)
-                .yaw(yaw);
+                .yaw(FRAC_PI_3);
+
             let i = rng.gen_range(5..10);
 
             for r_y in 0..i {
                 let sub_range = rng.gen_range(0.0..0.6);
-                let x1 = yaw * r_y as f32;
+                let x1 = FRAC_PI_6 * r_y as f32;
                 cdraw
                     .quad()
                     .no_fill()
