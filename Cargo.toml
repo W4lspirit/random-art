@@ -2,6 +2,7 @@
 members=[
     "img-ing",
     "structure-de-quadrilate-rs",
-    "unive-rs"
+    "unive-rs",
+    "quad-rs"
 ]
 resolver="2"
