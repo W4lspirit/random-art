@@ -1,8 +1,8 @@
 [workspace]
-members=[
+members = [
     "img-ing",
     "structure-de-quadrilate-rs",
     "unive-rs",
     "quad-rs"
-]
-resolver="2"
+    , "sticke-rs"]
+resolver = "2"
