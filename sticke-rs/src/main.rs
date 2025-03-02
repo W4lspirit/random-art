@@ -1,6 +1,4 @@
-use nannou::color::encoding::srgb;
 use nannou::color::{Gradient, IntoLinSrgba};
-use nannou::noise::utils::ColorGradient;
 use nannou::prelude::*;
 use std::ops::Div;
 use std::time::SystemTime;
@@ -103,76 +101,6 @@ fn view(app: &App, model: &Model, frame: Frame) {
 }
 
 fn w_letter(inner_w: f32, inner_h: f32) -> Vec<Point2> {
-    /*
-        <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-    <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
-            "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-
-    <svg xmlns="http://www.w3.org/2000/svg"
-         width="3.8in" height="5.78889in"
-         viewBox="0 0 342 521">
-        <path id="Selection"
-              fill="none" stroke="black" stroke-width="1"
-              d="M 259.00,340.00
-               C 259.00,340.00 261.12,322.96 261.12,322.96
-                 261.12,322.96 266.74,298.00 266.74,298.00
-                 266.74,298.00 277.26,267.00 277.26,267.00
-                 277.26,267.00 293.56,211.00 293.56,211.00
-                 293.56,211.00 312.02,150.00 312.02,150.00
-                 312.02,150.00 319.98,124.00 319.98,124.00
-                 319.98,124.00 325.33,106.00 325.33,106.00
-                 326.61,102.13 330.49,93.30 327.42,89.90
-                 325.75,88.06 313.74,82.21 311.00,81.41
-                 308.74,80.45 305.97,79.53 304.09,81.41
-                 302.71,83.07 298.68,97.11 297.86,100.00
-                 297.86,100.00 284.98,143.00 284.98,143.00
-                 284.98,143.00 271.28,189.00 271.28,189.00
-                 271.28,189.00 249.97,259.00 249.97,259.00
-                 249.97,259.00 238.49,294.00 238.49,294.00
-                 236.72,299.28 234.00,304.63 233.00,310.00
-                 218.87,306.78 207.37,296.66 199.00,294.00
-                 199.00,294.00 199.00,292.00 199.00,292.00
-                 199.00,292.00 218.00,279.67 218.00,279.67
-                 218.00,279.67 225.30,272.91 225.30,272.91
-                 225.30,272.91 223.69,265.00 223.69,265.00
-                 223.69,265.00 218.00,249.00 218.00,249.00
-                 212.69,251.53 211.75,253.88 207.91,258.00
-                 207.91,258.00 193.00,273.00 193.00,273.00
-                 190.50,275.49 185.80,280.96 182.00,280.65
-                 179.19,280.42 174.23,276.19 172.00,274.39
-                 166.83,270.21 157.32,261.85 152.00,259.00
-                 152.00,259.00 148.27,277.00 148.27,277.00
-                 148.27,277.00 148.27,284.37 148.27,284.37
-                 148.27,284.37 154.00,288.25 154.00,288.25
-                 154.00,288.25 168.00,296.00 168.00,296.00
-                 168.00,296.00 145.00,310.00 145.00,310.00
-                 145.00,310.00 132.31,286.00 132.31,286.00
-                 132.31,286.00 123.31,267.00 123.31,267.00
-                 123.31,267.00 86.31,187.00 86.31,187.00
-                 86.31,187.00 66.25,143.00 66.25,143.00
-                 66.25,143.00 48.26,104.00 48.26,104.00
-                 46.42,100.20 44.36,91.89 38.98,92.84
-                 36.88,93.21 32.88,95.93 31.00,97.17
-                 27.79,99.29 20.75,103.33 19.70,107.04
-                 18.79,110.25 21.85,115.09 23.22,118.00
-                 23.22,118.00 35.14,144.00 35.14,144.00
-                 35.14,144.00 64.69,208.00 64.69,208.00
-                 64.69,208.00 93.32,272.00 93.32,272.00
-                 93.32,272.00 102.75,290.00 102.75,290.00
-                 108.73,301.96 114.01,314.21 117.98,327.00
-                 118.82,329.73 120.93,340.73 122.73,341.95
-                 126.04,344.19 136.14,335.72 139.00,333.72
-                 139.00,333.72 171.00,312.00 171.00,312.00
-                 173.96,310.02 180.83,304.50 184.00,304.33
-                 187.31,304.16 201.18,311.85 205.00,313.75
-                 205.00,313.75 238.00,330.25 238.00,330.25
-                 243.90,333.20 253.02,338.29 259.00,340.00
-                  Z"/>
-    </svg>
-
-
-        */
-
     vec![
         pt2(259.00, 340.00),
         pt2(261.12, 322.96),
@@ -482,7 +410,8 @@ impl Etole {
 
         draw.polygon()
             .points(w_letter(self.line.width, self.line.height))
-            .xy(center)
+            .xy(-center)
+            .rotate(PI)
             .color(self.background_color);
         if self.debug {
             let r = Rect::from_w_h(342.0, 521.0);
@@ -497,21 +426,19 @@ impl Etole {
     }
 
     fn line(&self, draw: &Draw) {
-        /*let _gradient_b = Gradient::new(vec![
+        let gradient_b = Gradient::new(vec![
             self.line_color_a.into_lin_srgba(),
             WHITE.into_lin_srgba(),
             //self.background_color.into_lin_srgba(),
-        ]);*/
+        ]);
         // Secondary gradient
         let gradient = Gradient::new(vec![
             DEEPPINK.into_lin_srgba(),
             GREEN.into_lin_srgba(),
             self.line_color_a.into_lin_srgba(),
             YELLOW.into_lin_srgba(),
-
             //self.background_color.into_lin_srgba(),
         ]);
-
 
         let margin = self.line.margin.unwrap();
         let min_height = -self.line.height as i32 + margin;
@@ -520,8 +447,6 @@ impl Etole {
         let max_width = self.line.width as i32;
         match self.mode {
             Mode::Line => {
-
-
                 for i in min_height..max_height {
                     // create different shade  of gradient
                     // From a to white
@@ -534,7 +459,7 @@ impl Etole {
                             .start(pt2(-self.line.width + margin as f32, y))
                             .end(pt2(self.line.width - margin as f32, y))
                             .stroke_weight(0.5)
-                            .color(c);
+                            .color(self.line_color_a);
                     }
                 }
             }
@@ -544,13 +469,13 @@ impl Etole {
                         let i1 = random_range(0, 100);
                         let y = i as f32;
                         let end = max_width - min_width;
-                        let alpha1 = gradient.get(random_range(0.0f64, 1f64));
+                        let alpha1 = self.line_color_a;
                         let points = (0..=end).map(|i| {
                             let x = (i as f32) + min_width as f32; // scale the integer to a float
 
                             if i1 > 20 {
                                 let point = pt2(x, y);
-                                (point,alpha1)
+                                (point, alpha1)
                             } else {
                                 let x1 = x.sin();
                                 let point = pt2(x, x1 + y);
@@ -565,15 +490,17 @@ impl Etole {
             Mode::Dot => {
                 for i in min_height..max_height {
                     if i % 5 == 0 {
-
-
                         for k in min_width..max_width {
                             if k % 6 == 0 {
                                 let x_shift = if i % 2 == 0 { 0 } else { 3 } + k;
-                                let alpha = gradient.get(random_range(min_height as f64, max_height as f64));
-                                draw.ellipse()
+                                let alpha = gradient_b
+                                    .get(random_range(min_height as f64, max_height as f64));
+                                let h = random_range(1.0, 3.0);
+
+                                draw.rect()
+                                    .w_h(h, h)
                                     .x_y(x_shift as f32, i as f32)
-                                    .radius(0.5)
+                                    .rotate(random_range(0.0, PI))
                                     .color(alpha);
                             }
                         }
